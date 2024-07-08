@@ -6,5 +6,9 @@
     <string name="radiobutton">RadioButton</string>
     <string name="insert_task">Insert Task</string>
     <string name="add_task">Add task</string>
-    <string name="todo_list">TODO List</string>
+    <string name="todo_list">NOTTY</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="edit_note">Edit note</string>
+    <string name="delete_note">Delete Note</string>
 </resources>
