@@ -2,6 +2,7 @@ package com.example.todo.adapter
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
@@ -18,10 +19,17 @@ class NoteRecyclerViewAdapter(private var notes: List<Note>) :
     inner class NoteViewHolder(val binding: NoteCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.cardView.setOnClickListener {
-                val bundle = bundleOf("note" to binding.note)
-                it.findNavController().navigate(R.id.action_landingFragment_to_detailsFragment, bundle)
+            binding.editBtn.setOnClickListener{
+                    sendNoteContent(it, R.id.action_landingFragment_to_editFragment)
             }
+            binding.cardView.setOnClickListener {
+                sendNoteContent(it,R.id.action_landingFragment_to_detailsFragment)
+            }
+        }
+
+        private fun sendNoteContent(it: View, actionId: Int) {
+            val bundle = bundleOf("note" to binding.note)
+            it.findNavController().navigate(actionId, bundle)
         }
     }
 

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_landingFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_landingFragment_to_editFragment"
+            app:destination="@id/editFragment" />
     </fragment>
     <fragment
             android:id="@+id/createNoteFragment"
@@ -33,5 +36,13 @@
         <action
             android:id="@+id/action_detailsFragment_to_landingFragment"
             app:destination="@id/landingFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_editFragment"
+            app:destination="@id/editFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.example.todo.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit" />
 </navigation>
