@@ -9,5 +9,17 @@
         android:id="@+id/landingFragment"
         android:name="com.example.todo.LandingFragment"
         android:label="fragment_landing"
-        tools:layout="@layout/fragment_landing" />
+        tools:layout="@layout/fragment_landing" >
+        <action
+                android:id="@+id/action_landingFragment_to_createNoteFragment"
+                app:destination="@id/createNoteFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/createNoteFragment"
+            android:name="com.example.todo.CreateNoteFragment"
+            android:label="CreateNoteFragment" >
+        <action
+                android:id="@+id/action_createNoteFragment_to_landingFragment"
+                app:destination="@id/landingFragment" />
+    </fragment>
 </navigation>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="viewModel"
+                type="com.example.todo.view.NoteViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".CreateNoteFragment">
+
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:autofillHints=""
+                android:inputType="text"
+                android:ems="10"
+                android:text="@={viewModel.title}"
+                android:hint="@string/hint"
+                android:id="@+id/noteTitle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintVertical_bias="0.192" />
+
+        <EditText
+                android:layout_width="260dp"
+                android:layout_height="260dp"
+                android:inputType="textMultiLine"
+                android:gravity="start|top"
+                android:ems="10"
+                android:text="@={viewModel.body}"
+                android:id="@+id/note_description"
+                android:hint="@string/insert_the_description_here"
+                app:layout_constraintTop_toBottomOf="@+id/noteTitle"
+                android:layout_marginTop="44dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+                android:text="@string/add_note"
+                android:layout_width="199dp"
+                android:layout_height="48dp"
+                android:id="@+id/add_note"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/note_description"
+                android:layout_marginTop="44dp" />
+
+        <Button
+                android:text="@string/cancel"
+                android:layout_width="195dp"
+                android:layout_height="48dp"
+                android:id="@+id/cancel"
+                app:layout_constraintTop_toBottomOf="@+id/add_note"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
