@@ -9,12 +9,14 @@ import java.time.LocalDate
 class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
     val title = MutableLiveData<String>()
     var body = MutableLiveData<String>()
+    var date = MutableLiveData<String>()
 
     val notes = repository.getNotes()
 
     private fun clear() {
         title.value = ""
         body.value = ""
+        date.value = ""
     }
 
     fun insert() {
@@ -34,6 +36,10 @@ class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
 
     fun cancel() {
         clear()
+    }
+
+    fun delete(note: Note) {
+        repository.delete(note)
     }
 
 }
