@@ -15,4 +15,10 @@
     <string name="insert_the_description_here">Insert the description here</string>
     <string name="cancel">Cancel</string>
     <string name="add_note">Add note</string>
+    <string name="date">Day Month, Hour</string>
+    <string name="title">Title</string>
+    <string name="body">Body Text ...</string>
+    <string name="delete_button">Delete Button</string>
+    <string name="back_button">Back Button</string>
+    <string name="task_title">Task Example</string>
 </resources>

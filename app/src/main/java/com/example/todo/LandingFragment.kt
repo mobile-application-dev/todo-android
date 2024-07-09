@@ -34,6 +34,7 @@ class LandingFragment : Fragment() {
         binding.addBox.visibility = View.GONE
         binding.floatingAddBtn.setOnClickListener {
             binding.addBox.visibility = View.VISIBLE
+            binding.newText.requestFocus()
         }
         binding.addBtn.setOnClickListener {
             binding.addBox.visibility = View.GONE

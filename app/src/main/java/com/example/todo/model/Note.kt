@@ -1,7 +1,10 @@
 package com.example.todo.model
 
+import android.os.Parcelable
 import java.time.LocalDate
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Note(
     var id: Long,
     var userId: Long,
@@ -10,4 +13,4 @@ data class Note(
     var date: LocalDate,
     var longitude: Double,
     var latitude: Double
-)
+) : Parcelable

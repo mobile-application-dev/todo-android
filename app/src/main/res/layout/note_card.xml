@@ -10,6 +10,7 @@
     </data>
 
     <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -22,18 +23,26 @@
                 android:layout_height="match_parent">
 
             <CheckBox
-                    android:text="@{note.title}"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/checkBox"
-                    android:layout_weight="1" />
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:checked="false"
+                />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{note.title}" />
 
             <ImageButton
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/edit_note"
                     app:srcCompat="@android:drawable/ic_menu_edit"
-                    android:id="@+id/imageButton"
+                    android:id="@+id/editBtn"
                     android:layout_weight="0.2" />
 
             <ImageButton
@@ -41,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/delete_note"
                     app:srcCompat="@android:drawable/ic_menu_delete"
-                    android:id="@+id/imageButton2"
+                    android:id="@+id/deleteBtn"
                     android:layout_weight="0.025" />
 
         </LinearLayout>
