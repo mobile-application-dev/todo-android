@@ -7,16 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import com.example.todo.adapter.NoteRecyclerViewAdapter
 import com.example.todo.databinding.FragmentLandingBinding
 import com.example.todo.model.Note
 import com.example.todo.repository.NoteRepository
+import com.example.todo.view.NoteViewModel
 import java.time.LocalDate
 
 class LandingFragment : Fragment() {
     private lateinit var binding: FragmentLandingBinding
     private lateinit var repository: NoteRepository
     private lateinit var adapter: NoteRecyclerViewAdapter
+    private lateinit var viewModel: NoteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,21 +36,21 @@ class LandingFragment : Fragment() {
             binding.addBox.visibility = View.VISIBLE
         }
         binding.addBtn.setOnClickListener {
-            repository.insert(
-                Note(
-                    id = (repository.getNotes().value!!.size + 1).toLong(),
-                    userId = 1,
-                    title = binding.newText.text.toString(),
-                    body = binding.newText.text.toString(),
-                    date = LocalDate.now(),
-                    longitude = 0.0,
-                    latitude = 0.0
-                )
-            )
-            adapter.notifyDataSetChanged()
             binding.addBox.visibility = View.GONE
+            it.findNavController().navigate(R.id.action_landingFragment_to_createNoteFragment)
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = (activity as MainActivity).viewModel
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
+        viewModel.notes.observe(viewLifecycleOwner) {
+            adapter.setNotes(it)
+        }
     }
 
 

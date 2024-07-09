@@ -11,4 +11,8 @@
     <string name="edit">Edit</string>
     <string name="edit_note">Edit note</string>
     <string name="delete_note">Delete Note</string>
+    <string name="hint">Insert the note title here</string>
+    <string name="insert_the_description_here">Insert the description here</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_note">Add note</string>
 </resources>
