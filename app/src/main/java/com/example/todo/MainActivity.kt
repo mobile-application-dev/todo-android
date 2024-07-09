@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val factory = NoteViewModelFactory()
+        val factory = NoteViewModelFactory(this)
         viewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
 
     }

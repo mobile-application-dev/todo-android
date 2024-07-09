@@ -27,8 +27,7 @@ class LandingFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_landing, container, false)
         initViewModel()
-        repository = NoteRepository()
-        adapter = NoteRecyclerViewAdapter(repository.getNotes().value!!, viewModel)
+        adapter = NoteRecyclerViewAdapter(listOf(), viewModel)
         binding.noteList.layoutManager = LinearLayoutManager(context)
         binding.noteList.adapter = adapter
 
