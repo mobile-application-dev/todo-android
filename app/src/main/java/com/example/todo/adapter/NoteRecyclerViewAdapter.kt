@@ -7,9 +7,11 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todo.MainActivity
 import com.example.todo.databinding.NoteCardBinding
 import com.example.todo.model.Note
 import com.example.todo.R
+import com.example.todo.view.NoteViewModel
 
 class NoteRecyclerViewAdapter(private var notes: List<Note>) :
     RecyclerView.Adapter<NoteRecyclerViewAdapter.NoteViewHolder>() {
