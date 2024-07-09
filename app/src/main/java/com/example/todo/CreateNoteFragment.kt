@@ -34,14 +34,14 @@ class CreateNoteFragment : Fragment() {
         binding.cancel.setOnClickListener {
             viewModel.cancel()
             it.findNavController().navigate(
-                R.id.landingFragment
+                R.id.action_createNoteFragment_to_landingFragment
             )
         }
 
         binding.addNote.setOnClickListener {
             viewModel.insert()
             it.findNavController().navigate(
-                R.id.landingFragment
+                R.id.action_createNoteFragment_to_landingFragment
             )
         }
 

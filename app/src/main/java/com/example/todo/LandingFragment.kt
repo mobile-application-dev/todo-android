@@ -37,7 +37,7 @@ class LandingFragment : Fragment() {
         }
         binding.addBtn.setOnClickListener {
             binding.addBox.visibility = View.GONE
-            it.findNavController().navigate(R.id.createNoteFragment)
+            it.findNavController().navigate(R.id.action_landingFragment_to_createNoteFragment)
         }
         return binding.root
     }
