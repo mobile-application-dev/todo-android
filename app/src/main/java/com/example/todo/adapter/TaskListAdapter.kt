@@ -1,4 +1,4 @@
-package com.example.todo
+package com.example.todo.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todo.R
 import com.example.todo.model.Task
 
 class TaskListAdapter(private val taskList: LiveData<List<Task>>): RecyclerView.Adapter<TaskListAdapter.ViewHolder>(){
