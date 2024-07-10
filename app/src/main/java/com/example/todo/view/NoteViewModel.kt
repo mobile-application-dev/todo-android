@@ -7,13 +7,15 @@ import com.example.todo.repository.NoteRepository
 import java.time.LocalDate
 
 class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
-    val title = MutableLiveData<String>()
+    val id = MutableLiveData<Long>(0)
+    var title = MutableLiveData<String>()
     var body = MutableLiveData<String>()
     var date = MutableLiveData<String>()
 
     val notes = repository.getNotes()
 
-    private fun clear() {
+    fun clear() {
+        id.value = 0
         title.value = ""
         body.value = ""
         date.value = ""
@@ -21,15 +23,7 @@ class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
 
     fun insert() {
         if (title.value.isNullOrEmpty() || body.value.isNullOrEmpty()) return
-        val note = Note(
-            0,
-            1,
-            title.value!!,
-            body.value!!,
-            LocalDate.now(),
-            0.0,
-            0.0
-        )
+        val note = getCurrentNote()
         repository.insert(note)
         clear()
     }
@@ -38,8 +32,26 @@ class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
         clear()
     }
 
-    fun delete(note: Note) {
-        repository.delete(note)
+    fun delete() {
+        repository.delete(getCurrentNote())
+        notes.value = repository.getNotes().value
+        clear()
     }
 
+    fun update() {
+        repository.update(getCurrentNote())
+        clear()
+    }
+
+    private fun getCurrentNote(): Note{
+        return Note(
+            id.value!!,
+            1,
+            title.value!!,
+            body.value!!,
+            LocalDate.now(),
+            0.0,
+            0.0
+        )
+    }
 }

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.example.todo.databinding.FragmentDetailsBinding
-import com.example.todo.model.Note
 import com.example.todo.view.NoteViewModel
 
 class DetailsFragment : Fragment() {
@@ -27,20 +26,18 @@ class DetailsFragment : Fragment() {
 
     private fun setUpBackButton() {
         binding.backBtn.setOnClickListener() {
-            it.findNavController().navigate(R.id.action_detailsFragment_to_landingFragment)
+            viewModel.clear()
+            it.findNavController().popBackStack()
         }
     }
     private fun setUpDeleteButton() {
         binding.deleteBtn.setOnClickListener {
-            viewModel = (activity as MainActivity).viewModel
-            viewModel.delete(binding.note!!)
-            it.findNavController().navigate(R.id.action_detailsFragment_to_landingFragment)
+            viewModel.delete()
+            it.findNavController().popBackStack()
         }
     }
     private fun showDetailsNote() {
-        val note = requireArguments().getParcelable("note", Note::class.java)
-        if (note != null) {
-            binding.note = note
-        }
+        viewModel = (activity as MainActivity).viewModel
+        binding.viewModel = viewModel
     }
 }
