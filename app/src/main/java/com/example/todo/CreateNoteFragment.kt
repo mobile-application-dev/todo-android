@@ -27,22 +27,17 @@ class CreateNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = (activity as MainActivity).viewModel
-        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
 
         binding.cancel.setOnClickListener {
             viewModel.cancel()
-            it.findNavController().navigate(
-                R.id.action_createNoteFragment_to_landingFragment
-            )
+            it.findNavController().popBackStack()
         }
 
         binding.addNote.setOnClickListener {
             viewModel.insert()
-            it.findNavController().navigate(
-                R.id.action_createNoteFragment_to_landingFragment
-            )
+            it.findNavController().popBackStack()
         }
 
     }

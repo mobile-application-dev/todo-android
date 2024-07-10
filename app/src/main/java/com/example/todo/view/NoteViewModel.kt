@@ -14,7 +14,7 @@ class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
 
     val notes = repository.getNotes()
 
-    private fun clear() {
+    fun clear() {
         id.value = 0
         title.value = ""
         body.value = ""

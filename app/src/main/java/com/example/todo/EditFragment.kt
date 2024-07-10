@@ -28,12 +28,12 @@ class EditFragment : Fragment() {
     private fun setUpSaveButton() {
         binding.saveBtn.setOnClickListener {
             viewModel.update()
-            it.findNavController().navigate(R.id.action_editFragment_to_landingFragment)
+            it.findNavController().popBackStack()
         }
     }
     private fun setUpCancelButton() {
         binding.cancelBtn.setOnClickListener() {
-            it.findNavController().navigate(R.id.action_editFragment_to_landingFragment)
+            it.findNavController().popBackStack()
         }
     }
 }

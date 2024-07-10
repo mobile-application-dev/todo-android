@@ -26,13 +26,14 @@ class DetailsFragment : Fragment() {
 
     private fun setUpBackButton() {
         binding.backBtn.setOnClickListener() {
-            it.findNavController().navigate(R.id.action_detailsFragment_to_landingFragment)
+            viewModel.clear()
+            it.findNavController().popBackStack()
         }
     }
     private fun setUpDeleteButton() {
         binding.deleteBtn.setOnClickListener {
             viewModel.delete()
-            it.findNavController().navigate(R.id.action_detailsFragment_to_landingFragment)
+            it.findNavController().popBackStack()
         }
     }
     private fun showDetailsNote() {
