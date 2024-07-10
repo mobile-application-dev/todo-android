@@ -51,6 +51,17 @@ class NoteRepository {
     }
 
     fun delete(note: Note) {
-        notes.value?.remove(note)
+        val index = notes.value?.indexOfFirst { it.id == note.id }
+        if (index != null && index != -1) {
+            notes.value?.remove(notes.value?.get(index))
+        }
+    }
+
+    fun update(note: Note) {
+        val index = notes.value?.indexOfFirst { it.id == note.id }
+
+        if (index != null && index != -1) {
+            notes.value?.set(index, note)
+        }
     }
 }

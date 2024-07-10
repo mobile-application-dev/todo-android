@@ -26,8 +26,9 @@ class LandingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_landing, container, false)
+        initViewModel()
         repository = NoteRepository()
-        adapter = NoteRecyclerViewAdapter(repository.getNotes().value!!)
+        adapter = NoteRecyclerViewAdapter(repository.getNotes().value!!, viewModel)
         binding.noteList.layoutManager = LinearLayoutManager(context)
         binding.noteList.adapter = adapter
 
@@ -43,12 +44,14 @@ class LandingFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun initViewModel() {
         viewModel = (activity as MainActivity).viewModel
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.notes.observe(viewLifecycleOwner) {
             adapter.setNotes(it)
         }

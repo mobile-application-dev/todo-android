@@ -1,40 +1,39 @@
 package com.example.todo
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import com.example.todo.databinding.FragmentEditBinding
-import com.example.todo.model.Note
-import java.time.LocalDate
+import com.example.todo.view.NoteViewModel
 
 class EditFragment : Fragment() {
     lateinit var binding: FragmentEditBinding
+    private lateinit var viewModel: NoteViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit, container, false)
-        binding.saveBtn.setOnClickListener {
-            val note = requireArguments().getParcelable("note", Note::class.java)
-            note?.title = binding.title.text.toString()
-            note?.body = binding.body.text.toString()
-            note?.date = LocalDate.parse(binding.date.text.toString())
-            Log.d("EditFragment", "Note: $note")
-        }
-        loadData()
+        viewModel = (activity as MainActivity).viewModel
+        binding.viewModel = viewModel
+        setUpSaveButton()
+        setUpCancelButton()
         return binding.root
     }
-    private fun loadData() {
-        val note = requireArguments().getParcelable("note", Note::class.java)
 
-        if (note != null) {
-            binding.title.setText(note.title)
-            binding.body.setText(note.body)
-            binding.date.setText(note.date.toString())
+    private fun setUpSaveButton() {
+        binding.saveBtn.setOnClickListener {
+            viewModel.update()
+            it.findNavController().navigate(R.id.action_editFragment_to_landingFragment)
+        }
+    }
+    private fun setUpCancelButton() {
+        binding.cancelBtn.setOnClickListener() {
+            it.findNavController().navigate(R.id.action_editFragment_to_landingFragment)
         }
     }
 }
