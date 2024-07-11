@@ -53,12 +53,13 @@ class LoginFragment : Fragment() {
         val passwordEditText = binding.password
         val loginButton = binding.login
         val loadingProgressBar = binding.loading
-
-        if (loginViewModel.loginSession.value != "") {
-            view.findNavController().navigate(R.id.action_loginFragment_to_landingFragment)
-        } else {
-            ObserveSuccessfullResponse(view, loadingProgressBar)
+        loginViewModel.loginSession.observe(viewLifecycleOwner) {
+            if (it != "") {
+                updateUiWithUser(it)
+                view.findNavController().navigate(R.id.action_loginFragment_to_landingFragment)
+            }
         }
+        ObserveSuccessfullResponse(view, loadingProgressBar)
         loginViewModel.loginFormState.observe(viewLifecycleOwner,
             Observer { loginFormState ->
                 if (loginFormState == null) {
@@ -120,16 +121,11 @@ class LoginFragment : Fragment() {
                 loginResult.error?.let {
                     showLoginFailed(it)
                 }
-                loginResult.success?.let {
-                    updateUiWithUser(it)
-                    view.findNavController()
-                        .navigate(R.id.action_loginFragment_to_landingFragment)
-                }
             })
     }
 
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome) + model.displayName
+    private fun updateUiWithUser(model: String) {
+        val welcome = getString(R.string.welcome) + model
         // TODO : initiate successful logged in experience
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()

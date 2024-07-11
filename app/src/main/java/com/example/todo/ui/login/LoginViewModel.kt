@@ -65,7 +65,7 @@ class LoginViewModel(
     }
 
     fun logout() {
-        _loginResult.value = LoginResult(success = null, error = null)
+        Log.d("LoginViewModel", "logout")
         createDataStore("")
         loginSession.value = ""
     }

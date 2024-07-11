@@ -55,6 +55,7 @@ class LandingFragment : Fragment() {
 
     private fun setUpLogoutButton() {
         binding.logoutBtn.setOnClickListener {
+            Toast.makeText(context, "Logged out", Toast.LENGTH_SHORT).show()
             loginViewModel.logout()
         }
     }
