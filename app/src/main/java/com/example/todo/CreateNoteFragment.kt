@@ -29,7 +29,7 @@ class CreateNoteFragment : Fragment() {
         viewModel = (activity as MainActivity).viewModel
         binding.viewModel = viewModel
 
-
+        binding.noteTitle.requestFocus()
         binding.cancel.setOnClickListener {
             viewModel.cancel()
             it.findNavController().popBackStack()

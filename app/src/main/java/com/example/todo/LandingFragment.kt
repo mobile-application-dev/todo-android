@@ -27,13 +27,7 @@ class LandingFragment : Fragment() {
         binding.noteList.layoutManager = LinearLayoutManager(context)
         binding.noteList.adapter = adapter
 
-        binding.addBox.visibility = View.GONE
         binding.floatingAddBtn.setOnClickListener {
-            binding.addBox.visibility = View.VISIBLE
-            binding.newText.requestFocus()
-        }
-        binding.addBtn.setOnClickListener {
-            binding.addBox.visibility = View.GONE
             it.findNavController().navigate(R.id.action_landingFragment_to_createNoteFragment)
         }
         return binding.root
