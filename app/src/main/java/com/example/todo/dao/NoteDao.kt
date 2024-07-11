@@ -21,7 +21,7 @@ interface NoteDao : NoteKeeper {
     @Delete
     override suspend fun delete(note: Note)
 
-    @Query("SELECT * FROM notes")
+    @Query("SELECT * FROM notes Order By id DESC")
     override fun getNotes(): LiveData<List<Note>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
