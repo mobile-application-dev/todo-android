@@ -1,39 +1,51 @@
 package com.example.todo.view
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todo.model.Note
-import com.example.todo.repository.NoteKeeper
 import com.example.todo.repository.NoteRepository
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.UUID
 
-class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
-    val id = MutableLiveData<Long>(0)
+class NoteViewModel(
+    private val noteRepository: NoteRepository
+) : ViewModel() {
+    private val dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd")
+    val id = MutableLiveData(UUID.randomUUID().toString())
     var title = MutableLiveData<String>()
     var body = MutableLiveData<String>()
     var date = MutableLiveData<String>()
 
-    val notes = repository.getNotes()
+    val notes = noteRepository.notes
+
+    fun getAllNotes() = viewModelScope.launch {
+        noteRepository.getAllNotes().collect {
+            Log.d("NoteViewModel", "Notes updated")
+        }
+    }
 
     fun clear() {
-        id.value = 0
+        id.value = "default_id"
         title.value = ""
         body.value = ""
         date.value = ""
     }
 
     private fun insert(note: Note) = viewModelScope.launch {
-        repository.insert(note)
+        noteRepository.insert(note)
+        getAllNotes()
     }
 
     private fun update(note: Note) = viewModelScope.launch {
-        repository.update(note)
+        noteRepository.update(note)
     }
 
     private fun delete(note: Note) = viewModelScope.launch {
-        repository.delete(note)
+        noteRepository.delete(note)
     }
 
     fun insert() {
@@ -60,12 +72,12 @@ class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
     private fun getCurrentNote(): Note {
         return Note(
             id.value!!,
-            1,
+            "usuario8",
             title.value!!,
             body.value!!,
-            LocalDate.now(),
-            0.0,
-            0.0
+            LocalDate.now().format(dateFormat),
+            1.0,
+            2.0
         )
     }
 }

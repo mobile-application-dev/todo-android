@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.todo.model.Note
@@ -22,4 +23,7 @@ interface NoteDao : NoteKeeper {
 
     @Query("SELECT * FROM notes")
     override fun getNotes(): LiveData<List<Note>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    override suspend fun insertAll(notes: List<Note>)
 }

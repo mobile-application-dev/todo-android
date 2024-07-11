@@ -57,6 +57,10 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
+    val retroVersion = "2.11.0"
+    implementation("com.google.code.gson:gson:$retroVersion")
+    implementation("com.squareup.retrofit2:retrofit:$retroVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retroVersion")
 
     implementation("com.google.android.material:material:1.12.0")
     implementation(libs.androidx.core.ktx)
