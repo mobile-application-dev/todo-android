@@ -5,37 +5,39 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.example.todo.model.Note
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class NoteKeeperMemory : NoteKeeper {
 
     private val notes = MutableLiveData<ArrayList<Note>>()
+    private val dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd")
 
     init {
         notes.value = arrayListOf(
             Note(
-                1,
-                1,
+                "id1",
+                "usuario8",
                 "Note 1",
                 "This is the first note",
-                LocalDate.parse("2021-09-01"),
+                LocalDate.parse("2021-09-01").format(dateFormat),
                 0.0,
                 0.0
             ),
             Note(
-                2,
-                1,
+                "id2",
+                "usuario8",
                 "Note 2",
                 "This is the second note",
-                LocalDate.parse("2021-09-02"),
+                LocalDate.parse("2021-09-02").format(dateFormat),
                 0.0,
                 0.0
             ),
             Note(
-                3,
-                1,
+                "id3",
+                "usuario8",
                 "Note 3",
                 "This is the third note",
-                LocalDate.parse("2021-09-03"),
+                LocalDate.parse("2021-09-03").format(dateFormat),
                 0.0,
                 0.0
             )
@@ -43,7 +45,7 @@ class NoteKeeperMemory : NoteKeeper {
     }
 
     override suspend fun insert(note: Note) {
-        note.id = notes.value?.size?.toLong() ?: 0
+        note.id = "id" + notes.value?.size?.toLong()
         notes.value?.add(note)
         notes.value = notes.value
     }
@@ -63,5 +65,8 @@ class NoteKeeperMemory : NoteKeeper {
 
     override fun getNotes(): LiveData<List<Note>> {
         return notes.map { it }
+    }
+
+    override suspend fun insertAll(notes: List<Note>) {
     }
 }

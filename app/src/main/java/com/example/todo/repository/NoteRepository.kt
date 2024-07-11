@@ -1,27 +1,37 @@
 package com.example.todo.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
 import com.example.todo.model.Note
-import java.time.LocalDate
-import java.util.ArrayList
+import kotlinx.coroutines.flow.flow
 
-class NoteRepository(private val keeper: NoteKeeper) {
+class NoteRepository(
+    private val keeper: NoteKeeper,
+    private val apiRepository: NoteApiRepository
+) {
+    val notes = keeper.getNotes()
 
-    fun getNotes(): LiveData<ArrayList<Note>> {
-        return keeper.getNotes().map { it as ArrayList<Note> }
+    fun getAllNotes() = flow {
+        val response = apiRepository.getNotes()
+        if (response.isSuccessful) {
+            response.result?.let {
+                keeper.insertAll(it)
+            }
+            emit(true)
+        } else {
+            emit(false)
+        }
     }
 
     suspend fun insert(note: Note) {
-        keeper.insert(note)
+        apiRepository.insert(note)
     }
 
     suspend fun update(note: Note) {
+        apiRepository.update(note)
         keeper.update(note)
     }
 
     suspend fun delete(note: Note) {
+        apiRepository.delete(note)
         keeper.delete(note)
     }
 }

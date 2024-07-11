@@ -23,6 +23,5 @@ class MainActivity : AppCompatActivity() {
 
         val factory = NoteViewModelFactory(this)
         viewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
-
     }
 }
