@@ -35,7 +35,6 @@ class LandingFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel = (activity as MainActivity).viewModel
-        binding.lifecycleOwner = this
         binding.viewModel = viewModel
         viewModel.getAllNotes()
     }

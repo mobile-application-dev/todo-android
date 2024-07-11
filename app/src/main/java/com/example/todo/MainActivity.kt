@@ -11,6 +11,7 @@ import com.example.todo.view.NoteViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel: NoteViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,7 +21,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         val factory = NoteViewModelFactory(this)
         viewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
     }
