@@ -42,10 +42,12 @@ class NoteViewModel(
 
     private fun update(note: Note) = viewModelScope.launch {
         noteRepository.update(note)
+        getAllNotes()
     }
 
     private fun delete(note: Note) = viewModelScope.launch {
         noteRepository.delete(note)
+        getAllNotes()
     }
 
     fun insert() {
