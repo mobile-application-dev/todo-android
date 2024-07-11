@@ -1,11 +1,13 @@
 package com.example.todo.view
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todo.model.Note
 import com.example.todo.repository.NoteRepository
+import com.example.todo.utils.NetworkUtils
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -21,7 +23,6 @@ class NoteViewModel(
     var date = MutableLiveData<String>()
     var latitude = MutableLiveData<Double>(0.0)
     var longitude = MutableLiveData<Double>(0.0)
-
     val notes = noteRepository.notes
 
     fun getAllNotes() = viewModelScope.launch {

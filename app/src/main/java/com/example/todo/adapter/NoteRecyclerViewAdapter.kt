@@ -4,11 +4,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.databinding.NoteCardBinding
 import com.example.todo.model.Note
 import com.example.todo.R
+import com.example.todo.utils.NetworkUtils
 import com.example.todo.view.NoteViewModel
 
 class NoteRecyclerViewAdapter(private var notes: List<Note>,
@@ -19,15 +21,22 @@ class NoteRecyclerViewAdapter(private var notes: List<Note>,
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.editBtn.setOnClickListener{
-                sendNoteContent(it, R.id.action_landingFragment_to_editFragment)
+                if (NetworkUtils.isNetworkAvailable(it.context)) {
+                    sendNoteContent(it, R.id.action_landingFragment_to_editFragment)
+                } else {
+                    Toast.makeText(it.context, "No internet connection", Toast.LENGTH_SHORT).show()
+                }
             }
             binding.cardView.setOnClickListener {
-                sendNoteContent(it,R.id.action_landingFragment_to_detailsFragment)
+                sendNoteContent(it, R.id.action_landingFragment_to_detailsFragment)
             }
             binding.deleteBtn.setOnClickListener {
-                loadNoteContent()
-                Log.d("NoteRecyclerViewAdapter", "Deleting note")
-                viewModel.delete()
+                if (NetworkUtils.isNetworkAvailable(it.context)) {
+                    loadNoteContent()
+                    viewModel.delete()
+                } else {
+                    Toast.makeText(it.context, "No internet connection", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

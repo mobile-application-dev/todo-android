@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.todo.adapter.NoteRecyclerViewAdapter
 import com.example.todo.databinding.FragmentLandingBinding
 import com.example.todo.ui.login.LoginViewModel
+import com.example.todo.utils.NetworkUtils
 import com.example.todo.view.NoteViewModel
 
 class LandingFragment : Fragment() {
@@ -41,7 +42,11 @@ class LandingFragment : Fragment() {
 
         setUpLogoutButton()
         binding.floatingAddBtn.setOnClickListener {
-            it.findNavController().navigate(R.id.action_landingFragment_to_createNoteFragment)
+            if(NetworkUtils.isNetworkAvailable(requireContext())) {
+                it.findNavController().navigate(R.id.action_landingFragment_to_createNoteFragment)
+            } else {
+                Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show()
+            }
         }
         return binding.root
     }
@@ -50,7 +55,11 @@ class LandingFragment : Fragment() {
         viewModel = (activity as MainActivity).viewModel
         loginViewModel = (activity as MainActivity).loginViewModel
         binding.viewModel = viewModel
-        viewModel.getAllNotes()
+        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+            viewModel.getAllNotes()
+        } else {
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setUpLogoutButton() {
@@ -62,9 +71,15 @@ class LandingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.notes.observe(viewLifecycleOwner) {
-            adapter.setNotes(it)
+        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+            viewModel.notes.observe(viewLifecycleOwner) {
+                adapter.setNotes(it)
+            }
+        } else {
+            adapter.setNotes(viewModel.notes.value.orEmpty())
+            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show()
         }
+
     }
 
 
