@@ -41,6 +41,8 @@ class NoteRecyclerViewAdapter(private var notes: List<Note>,
             viewModel.title.value = binding.note?.title
             viewModel.body.value = binding.note?.body
             viewModel.date.value = binding.note?.date.toString()
+            viewModel.longitude.value = binding.note?.longitude
+            viewModel.latitude.value = binding.note?.latitude
         }
     }
 

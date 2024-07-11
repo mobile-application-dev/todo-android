@@ -1,5 +1,7 @@
 package com.example.todo
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,6 +21,7 @@ class DetailsFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         setUpBackButton()
+        setUpButtonToOpenInGoogleMaps()
         setUpDeleteButton()
         showDetailsNote()
         return binding.root
@@ -26,7 +29,7 @@ class DetailsFragment : Fragment() {
 
     private fun setUpBackButton() {
         binding.backBtn.setOnClickListener() {
-            viewModel.clear()
+            viewModel.cancel()
             it.findNavController().popBackStack()
         }
     }
@@ -39,5 +42,16 @@ class DetailsFragment : Fragment() {
     private fun showDetailsNote() {
         viewModel = (activity as MainActivity).viewModel
         binding.viewModel = viewModel
+    }
+
+    fun setUpButtonToOpenInGoogleMaps() {
+        binding.localization.setOnClickListener() {
+            val latitude = viewModel.latitude.value
+            val longitude = viewModel.longitude.value
+            val uri = "geo:0,0?q=$latitude,$longitude"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+            intent.setPackage("com.google.android.apps.maps")
+            startActivity(intent)
+        }
     }
 }

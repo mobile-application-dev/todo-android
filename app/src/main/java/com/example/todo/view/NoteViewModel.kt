@@ -19,6 +19,8 @@ class NoteViewModel(
     var title = MutableLiveData<String>()
     var body = MutableLiveData<String>()
     var date = MutableLiveData<String>()
+    var latitude = MutableLiveData<Double>(0.0)
+    var longitude = MutableLiveData<Double>(0.0)
 
     val notes = noteRepository.notes
 
@@ -78,8 +80,8 @@ class NoteViewModel(
             title.value!!,
             body.value!!,
             LocalDate.now().format(dateFormat),
-            1.0,
-            2.0
+            longitude.value!!,
+            latitude.value!!
         )
     }
 }
