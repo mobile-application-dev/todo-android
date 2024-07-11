@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +16,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.navigation.findNavController
+import com.example.todo.MainActivity
 import com.example.todo.databinding.FragmentLoginBinding
 
 import com.example.todo.R
+import com.example.todo.dataStore
 
 class LoginFragment : Fragment() {
 
@@ -28,13 +33,14 @@ class LoginFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private var dataStore: DataStore<Preferences>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        dataStore = (activity as MainActivity).dataStore
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -42,9 +48,16 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
+        loginViewModel =
+            ViewModelProvider(this, LoginViewModelFactory(dataStore!!))[LoginViewModel::class.java]
+        loginViewModel.verifyLogin()
 
+        loginViewModel.loginSession.observe(viewLifecycleOwner) {
+            if (it != "") {
+                view.findNavController()
+                    .navigate(R.id.action_loginFragment_to_landingFragment)
+            }
+        }
         val usernameEditText = binding.username
         val passwordEditText = binding.password
         val loginButton = binding.login

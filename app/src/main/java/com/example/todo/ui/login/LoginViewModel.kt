@@ -4,20 +4,40 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.viewModelScope
 import com.example.todo.data.LoginRepository
 import com.example.todo.data.Result
 
 import com.example.todo.R
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(
+    private val loginRepository: LoginRepository,
+    private val dataStore: DataStore<Preferences>
+) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
+    val loginSession = MutableLiveData("")
+    private val key = stringPreferencesKey("user_session")
+    private val loginFlow: Flow<String> = dataStore.data.map { preferences ->
+        preferences[key] ?: ""
+    }
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
+
+    private fun createDataStore(username: String) = viewModelScope.launch {
+        dataStore.edit { settings ->
+            settings[key] = username
+        }
+    }
 
     private fun logIn(username: String, password: String) = viewModelScope.launch {
         val result = loginRepository.login(username, password)
@@ -25,10 +45,17 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         if (result is Result.Success) {
             _loginResult.value =
                 LoginResult(success = LoggedInUserView(displayName = result.data.userId))
+            createDataStore(result.data.userId)
         } else {
             _loginResult.value = LoginResult(error = R.string.login_failed)
         }
 
+    }
+
+    fun verifyLogin() = viewModelScope.launch {
+        loginFlow.collect {
+            loginSession.postValue(it)
+        }
     }
 
     fun login(username: String, password: String) {
