@@ -71,12 +71,10 @@ class LoginFragment : Fragment() {
                 loginResult.error?.let {
                     showLoginFailed(it)
                 }
-                loginResult.success?.let { it ->
-                    loginButton.setOnClickListener {
-                        it.findNavController()
-                            .navigate(R.id.action_loginFragment_to_landingFragment)
-                    }
+                loginResult.success?.let {
                     updateUiWithUser(it)
+                    view.findNavController()
+                        .navigate(R.id.action_loginFragment_to_landingFragment)
                 }
             })
 

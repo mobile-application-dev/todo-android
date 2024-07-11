@@ -17,10 +17,9 @@ class LoginViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             val service = RetrofitFactory.createRetrofit().create(LoginApiService::class.java)
+            val repository = LoginRepository(LoginDataSource(service))
             return LoginViewModel(
-                loginRepository = LoginRepository(
-                    dataSource = LoginDataSource(service)
-                )
+                repository
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
