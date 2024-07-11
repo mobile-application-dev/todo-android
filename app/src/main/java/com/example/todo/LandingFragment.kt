@@ -48,6 +48,7 @@ class LandingFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel = (activity as MainActivity).viewModel
+        loginViewModel = (activity as MainActivity).loginViewModel
         binding.viewModel = viewModel
         viewModel.getAllNotes()
     }

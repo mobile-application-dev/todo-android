@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        loginViewModel = ViewModelProvider(this, LoginViewModelFactory(this.dataStore)).get(LoginViewModel::class.java)
         val factory = NoteViewModelFactory(this)
         viewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
     }
