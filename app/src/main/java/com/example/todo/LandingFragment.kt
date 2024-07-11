@@ -8,18 +8,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.todo.adapter.NoteRecyclerViewAdapter
 import com.example.todo.databinding.FragmentLandingBinding
 import com.example.todo.model.Note
 import com.example.todo.repository.NoteRepository
+import com.example.todo.view.LoginViewModel
 import com.example.todo.view.NoteViewModel
 import java.time.LocalDate
 
 class LandingFragment : Fragment() {
     private lateinit var binding: FragmentLandingBinding
-    private lateinit var repository: NoteRepository
     private lateinit var adapter: NoteRecyclerViewAdapter
     private lateinit var viewModel: NoteViewModel
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,12 +42,13 @@ class LandingFragment : Fragment() {
             binding.addBox.visibility = View.GONE
             it.findNavController().navigate(R.id.action_landingFragment_to_createNoteFragment)
         }
+        setUpLogOutButton()
         return binding.root
     }
 
     private fun initViewModel() {
         viewModel = (activity as MainActivity).viewModel
-        binding.lifecycleOwner = this
+        loginViewModel = (activity as MainActivity).viewModelLogin
         binding.viewModel = viewModel
     }
 
@@ -57,4 +60,10 @@ class LandingFragment : Fragment() {
     }
 
 
+    private fun setUpLogOutButton() {
+        binding.logoutBtn.setOnClickListener {
+            loginViewModel.logout()
+            it.findNavController().navigate(R.id.action_landingFragment_to_loginFragment)
+        }
+    }
 }

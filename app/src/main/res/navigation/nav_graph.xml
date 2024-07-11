@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/landingFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/landingFragment"
@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_landingFragment_to_editFragment"
             app:destination="@id/editFragment" />
+        <action
+            android:id="@+id/action_landingFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
             android:id="@+id/createNoteFragment"
@@ -47,6 +50,15 @@
         tools:layout="@layout/fragment_edit" >
         <action
             android:id="@+id/action_editFragment_to_landingFragment"
+            app:destination="@id/landingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.todo.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_landingFragment"
             app:destination="@id/landingFragment" />
     </fragment>
 </navigation>

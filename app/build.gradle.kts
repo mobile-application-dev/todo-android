@@ -34,6 +34,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -42,6 +43,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.annotation)
     val lifecycleVersion = "2.8.2"
     val nav_version = "2.7.7"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
