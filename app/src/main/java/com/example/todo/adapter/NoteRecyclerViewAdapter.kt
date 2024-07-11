@@ -27,6 +27,9 @@ class NoteRecyclerViewAdapter(private var notes: List<Note>,
                     Toast.makeText(it.context, "No internet connection", Toast.LENGTH_SHORT).show()
                 }
             }
+            binding.cardView.setOnClickListener {
+                sendNoteContent(it, R.id.action_landingFragment_to_detailsFragment)
+            }
             binding.deleteBtn.setOnClickListener {
                 if (NetworkUtils.isNetworkAvailable(it.context)) {
                     loadNoteContent()
