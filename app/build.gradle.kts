@@ -35,6 +35,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -46,6 +47,8 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.play.services.maps)
     implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation(libs.androidx.annotation)
+
     val lifecycleVersion = "2.8.2"
     val nav_version = "2.7.7"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
